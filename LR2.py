@@ -30,7 +30,7 @@ with graph.as_default():
     optimizer = tf.train.AdamOptimizer(learning_rate = 0.001).minimize(loss)
 
     with tf.Session(graph = graph) as session:
-        for i in xrange(10):
+        for i in range(10):
             tf.global_variables_initializer().run()
             
             _ = session.run(optimizer, feed_dict = {x : features, y : labels})
