@@ -1,4 +1,5 @@
 
+# Data source: https://www.kaggle.com/c/digit-recognizer/data
 import numpy as np
 import tensorflow as tf
 np.random.seed(1)
