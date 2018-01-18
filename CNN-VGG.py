@@ -21,16 +21,19 @@ net = tf.nn.conv2d(x, tf.Variable(tf.random_normal([3,3,1,64])), strides=[1, 1, 
 net = tf.nn.conv2d(net, tf.Variable(tf.random_normal([3,3,64,64])), strides=[1, 1, 1, 1], padding='SAME')
 net += tf.nn.relu(net)
 net = tf.nn.max_pool(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+net = tf.nn.local_response_normalization(net)
 
 net = tf.nn.conv2d(net, tf.Variable(tf.random_normal([3,3,64,128])), strides=[1, 1, 1, 1], padding='SAME')
 net = tf.nn.conv2d(net, tf.Variable(tf.random_normal([3,3,128,128])), strides=[1, 1, 1, 1], padding='SAME')
 net += tf.nn.relu(net)
 net = tf.nn.max_pool(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+net = tf.nn.local_response_normalization(net)
 
 net = tf.nn.conv2d(net, tf.Variable(tf.random_normal([3,3,128,256])), strides=[1, 1, 1, 1], padding='SAME')
 net = tf.nn.conv2d(net, tf.Variable(tf.random_normal([3,3,256,256])), strides=[1, 1, 1, 1], padding='SAME')
 net += tf.nn.relu(net)
 net = tf.nn.max_pool(net, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+net = tf.nn.local_response_normalization(net)
 
 W_fc1 = tf.truncated_normal([4*4*256, 10], stddev=0.1)
 net = tf.reshape(net, [-1, 4*4*256])
