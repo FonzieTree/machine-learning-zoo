@@ -13,6 +13,7 @@ batch_size = 8
 data_size = len(data)
 num_batches = int(len(data) / batch_size)
 
+
 print('Building CNN model..')
 # settings for optimization
 training_epochs=10
@@ -54,12 +55,12 @@ with tf.name_scope('layer4') as scope:
 model = tf.matmul(L4, W5)
 model = tf.nn.softmax(model, dim = -1, name = 'model')
 loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = model, labels = y), name = 'loss')
-optimizer = tf.train.AdamOptimizer(learning_rate=0.001).minimize(loss)
+optimizer = tf.train.AdamOptimizer(learning_rate = 0.001).minimize(loss)
 init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
-for i in range(10):
+for i in range(1):
     shuffle_indices = np.random.permutation(np.arange(data_size))
     shuffled_data = data[shuffle_indices]
     for batch_num in range(num_batches-2):
@@ -72,4 +73,4 @@ for i in range(10):
         xx = xx.reshape(-1, 28, 28, 1)
         yy = batch_data[:,0]
         result = sess.run(optimizer, feed_dict = {x:xx, y:yy})
-    print('Epoch: ', i, '    loss: ', sess.run(loss, feed_dict = {x:xx, y:yy}))
+        print('Epoch: ', i, '    loss: ', sess.run(loss, feed_dict = {x:xx, y:yy}))
