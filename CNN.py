@@ -5,18 +5,18 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 np.random.seed(1)
 epsilon = 1e-8
 print('loading data')
-data=np.genfromtxt("train.csv", dtype = 'int', skip_header=1, delimiter = ',')
+data=np.genfromtxt(r"train.csv", dtype = 'int', skip_header=1, delimiter = ',')
 print('finished loading')
 x  = tf.placeholder(shape = (None, 28, 28, 1), dtype = tf.float32, name = 'x')
-y = tf.placeholder(dtype = tf.int32, name = 'y')
-batch_size = 8
+y = tf.placeholder(dtype = tf.int64, name = 'y')
+batch_size = 100
 data_size = len(data)
 num_batches = int(len(data) / batch_size)
 
 
 print('Building CNN model..')
 # settings for optimization
-training_epochs=10
+training_epochs=100
 p_keep_conv=0.8
 p_keep_hidden=0.5
 
@@ -60,7 +60,7 @@ init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
-for i in range(1):
+for i in range(training_epochs):
     shuffle_indices = np.random.permutation(np.arange(data_size))
     shuffled_data = data[shuffle_indices]
     for batch_num in range(num_batches-2):
@@ -73,4 +73,7 @@ for i in range(1):
         xx = xx.reshape(-1, 28, 28, 1)
         yy = batch_data[:,0]
         result = sess.run(optimizer, feed_dict = {x:xx, y:yy})
-        print('Epoch: ', i, '    loss: ', sess.run(loss, feed_dict = {x:xx, y:yy}))
+    print('Epoch: ', i, '    loss: ', sess.run(loss, feed_dict = {x:xx, y:yy}))
+    is_correct = tf.equal(tf.argmax(model, 1), y)
+    accuracy = tf.reduce_mean(tf.cast(is_correct, tf.float32))
+    print('Acc:', sess.run(accuracy, feed_dict={x:xx, y:yy}))
