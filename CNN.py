@@ -15,8 +15,6 @@ num_batches = int(len(data) / batch_size)
 
 print('Building CNN model..')
 # settings for optimization
-learning_rate=0.001
-decay=0.9
 training_epochs=10
 p_keep_conv=0.8
 p_keep_hidden=0.5
@@ -56,7 +54,7 @@ with tf.name_scope('layer4') as scope:
 model = tf.matmul(L4, W5)
 model = tf.nn.softmax(model, dim = -1, name = 'model')
 loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = model, labels = y), name = 'loss')
-optimizer = tf.train.AdamOptimizer(learning_rate, decay).minimize(loss)
+optimizer = tf.train.AdamOptimizer(learning_rate=0.001).minimize(loss)
 init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
