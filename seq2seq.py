@@ -1,6 +1,7 @@
-#https://github.com/ttsunion/TensorFlow-Tutorials/blob/master/10%20-%20RNN/02%20-%20Autocomplete.py
 import tensorflow as tf
 import numpy as np
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 char_arr = [c for c in 'SEabcdefghijklmnopqrstuvwxyz']
 num_dic = {n: i for i, n in enumerate(char_arr)}
 dic_len = len(num_dic)
@@ -15,7 +16,7 @@ def make_batch(seq_data):
     output_batch = []
     target_batch = []
     for seq in seq_data:
-        input = [num_dic[n] for n in seq[0]]
+        input = [num_dic[n] for n in seq[0]] 
         output = [num_dic[n] for n in ('S' + seq[1])]
         target = [num_dic[n] for n in (seq[1] + 'E')]
         input_batch.append(np.eye(dic_len)[input])
@@ -35,7 +36,6 @@ enc_input = tf.placeholder(tf.float32, [None, None, n_input])
 dec_input = tf.placeholder(tf.float32, [None, None, n_input])
 # [batch size, time steps]
 targets = tf.placeholder(tf.int64, [None, None])
-
 with tf.variable_scope('encode'):
     enc_cell = tf.nn.rnn_cell.BasicRNNCell(n_hidden)
     enc_cell = tf.nn.rnn_cell.DropoutWrapper(enc_cell, output_keep_prob=0.5)
@@ -84,7 +84,6 @@ def translate(word):
     input_batch, output_batch, target_batch = make_batch([seq_data])
 
     prediction = tf.argmax(model, 2)
-
     result = sess.run(prediction,
                       feed_dict={enc_input: input_batch,
                                  dec_input: output_batch,
