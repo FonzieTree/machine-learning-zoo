@@ -2,13 +2,13 @@ import tensorflow as tf
 import numpy as np
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-char_arr = [c for c in 'SEabcdefghijklmnopqrstuvwxyz']
+char_arr = [c for c in 'PSEabcdefghijklmnopqrstuvwxyz']
 num_dic = {n: i for i, n in enumerate(char_arr)}
 dic_len = len(num_dic)
 
-seq_data = [['word', 'cicc'], ['wood', 'muta'],
-            ['game', 'youa'], ['girl', 'nvha'],
-            ['kiss', 'went'], ['love', 'aifd']]
+seq_data = [['word', 'ciyuPP'], ['wood', 'mutouP'],
+            ['game', 'youxiP'], ['girl', 'nvhaiP'],
+            ['kiss', 'wenPPP'], ['love', 'aiPPPP']]
 
 
 def make_batch(seq_data):
@@ -91,16 +91,14 @@ def translate(word):
 
     decoded = [char_arr[i] for i in result[0]]
 
-    end = decoded.index('E')
-    translated = ''.join(decoded[:end])
+    #end = decoded.index('P')
+    translated = ''.join(decoded)
 
     return translated
-
-
-print('\n=== Done===')
-
 print('word ->', translate('word'))
 print('wodr ->', translate('wodr'))
 print('love ->', translate('love'))
 print('loev ->', translate('loev'))
 print('abcd ->', translate('abcd'))
+
+print('\n=== Done===')
