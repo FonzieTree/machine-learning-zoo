@@ -6,9 +6,9 @@ char_arr = [c for c in 'SEabcdefghijklmnopqrstuvwxyz']
 num_dic = {n: i for i, n in enumerate(char_arr)}
 dic_len = len(num_dic)
 
-seq_data = [['word', 'ci'], ['wood', 'mutou'],
-            ['game', 'youxi'], ['girl', 'nvhai'],
-            ['kiss', 'wen'], ['love', 'ai']]
+seq_data = [['word', 'cicc'], ['wood', 'muta'],
+            ['game', 'youa'], ['girl', 'nvha'],
+            ['kiss', 'went'], ['love', 'aifd']]
 
 
 def make_batch(seq_data):
@@ -78,8 +78,8 @@ print('Done')
 
 
 def translate(word):
-    # ['word', 'PPPP']
-    seq_data = [word, 'P' * len(word)]
+    # ['word', 'pppp']
+    seq_data = [word, 'p' * len(word)]
 
     input_batch, output_batch, target_batch = make_batch([seq_data])
 
