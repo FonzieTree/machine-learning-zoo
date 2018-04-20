@@ -1,4 +1,4 @@
-#A work example for Mixture Density Networks with TensorFlow
+#A work example for Mixture Density Networks with TensorFlow 1.4.0 in python3.6
 #revised from http://blog.otoro.net/2015/11/24/mixture-density-networks-with-tensorflow/
 import matplotlib.pyplot as plt
 import numpy as np
